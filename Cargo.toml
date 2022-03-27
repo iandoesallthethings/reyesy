@@ -1,0 +1,15 @@
+[package]
+name = "reyesy"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+nannou = "0.18.1"
+nannou_audio = "0.18.0"
+hound = "3.4.0"
+dasp = { version = "0.11.0", features = ["all"] }
+dasp_ring_buffer = "0.11.0"
+
+[profile.release]
+debug = false
+incremental = true
