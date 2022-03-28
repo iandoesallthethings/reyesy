@@ -103,6 +103,7 @@ fn key_pressed(_app: &App, model: &mut Model, key: Key) {
     }
 }
 
+// audio_trigger_animation
 fn render_snare_animation(draw: &Draw, seconds_since_last_hit: f32) {
     let saturation_slope = -1.0;
     let saturation_max = 1.0;
@@ -112,6 +113,9 @@ fn render_snare_animation(draw: &Draw, seconds_since_last_hit: f32) {
     draw.background().color(background_color);
 }
 
+// fn midi_trigger_animation() {}
+
+// meter_animation
 fn render_kick_animation(draw: &Draw, seconds_since_last_hit: f32) {
     let radius_slope = -100.0;
     let radius_max = 50.0;
@@ -121,8 +125,13 @@ fn render_kick_animation(draw: &Draw, seconds_since_last_hit: f32) {
     draw.ellipse().radius(radius).color(ellipse_color);
 }
 
+// Scope - Eyesy simply gives you the last ~100 samples to display.
+// Not sure if it does any smoothing or anything. Real scopes scan. Maybe we
+// can model that? XY scopes would be cool, too - Plug in more than one signal, default to scan otherwise.
+// fn scope_animation() {}
+
 fn render_meter(app: &App, draw: &Draw, current_rms: f32) {
-    let meter_color = hsl(0.2, 0.3, 0.5);
+    let meter_color = hsl(0.2, 0.3, 0.2);
     let meter_height = current_rms;
 
     let container = app.window_rect();
@@ -150,7 +159,7 @@ fn view(app: &App, model: &Model, frame: Frame) {
 
     render_kick_animation(&draw, seconds_since_last_hit[2]);
     render_snare_animation(&draw, seconds_since_last_hit[3]);
-    render_meter(app, &draw, model.rms.current()[2]);
+    render_meter(app, &draw, model.rms.current()[3]);
 
     draw.to_frame(app, &frame).unwrap();
 }
