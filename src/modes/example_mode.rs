@@ -1,5 +1,3 @@
-// This is the dream implementation if possible. It's the closest
-
 pub fn setup() {
     // Return a partial ModeModel (Called Model to abstract the concept away from the dev)
     // import this in model() and append to actual Model

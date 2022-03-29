@@ -1,3 +1,6 @@
+// This is the dream implementation if possible - closely mirroring the pygame
+// pattern of Engine + Modes so eyesy builders will have an easy time switching over.
+
 use dasp::rms::Rms;
 use dasp_ring_buffer as ring_buffer;
 use nannou::prelude::*;
@@ -18,6 +21,7 @@ fn main() {
 }
 
 type SixteenChannels = [f32; 16];
+type TwoChannels = [f32; 2];
 type SampleRms = Rms<SixteenChannels, [SixteenChannels; 128]>;
 
 struct Model {
@@ -134,6 +138,7 @@ fn view(app: &App, model: &Model, frame: Frame) {
     }
 
     fn midi_trigger(audio_channel: i32, animation: Function) {
+        // Also pass in midi stream
         animation(seconds_since_last_hit[audio_channel]);
     }
 
@@ -148,7 +153,7 @@ fn view(app: &App, model: &Model, frame: Frame) {
     Reyesy {
         draw: nannou_draw,
         window: app.window_rect(),
-        model: model.mode_model,
+        mode_model: model.mode_model,
         time: app.time(),
         meter,
         scope,
@@ -157,7 +162,7 @@ fn view(app: &App, model: &Model, frame: Frame) {
         // color_picker, knob values, other eyesy utilites, etc
     };
 
-    mode.draw(Reyesy);
+    mode.draw(Reyesy).expect("Error in mode::draw");
 
     nannou_draw.to_frame(app, &frame).unwrap();
 }
